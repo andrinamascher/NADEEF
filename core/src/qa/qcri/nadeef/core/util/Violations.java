@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -58,6 +58,32 @@ public class Violations {
         return result;
     }
 
+    /**
+     * Get the number of violations which related to one specific rule @param ruleId
+     * @return the number of violations.
+     */
+    public static int getNumberOfViolationsByRule(String ruleId)
+    	throws 
+    		ClassNotFoundException,
+    		SQLException,
+    		InstantiationException,
+    		IllegalAccessException {
+    	Connection conn = DBConnectionFactory.getNadeefConnection();
+    	String tableName = NadeefConfiguration.getViolationTableName();
+    	Statement stat = conn.createStatement();
+    	String queryTemplate = "SELECT count(distinct (vid)) as count from {TABLENAME} where rid='{RID}'";
+    	String query = queryTemplate.replaceAll("\\{RID\\}", ruleId).replaceAll("\\{TABLENAME\\}", tableName);
+    	ResultSet resultSet = 
+    			stat.executeQuery(query);
+    	int result = -1;
+    	if (resultSet.next()){
+    		result = resultSet.getInt("count");
+    	}
+    	stat.close();
+    	conn.close();
+    	return result; 
+    }
+    
     /**
      * Generates violation id from the database.
      * @return new unique violation id.

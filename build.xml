@@ -72,6 +72,7 @@ NADEEF is released under the terms of the MIT License, (http://opensource.org/li
         <fail message="JDK 1.7 required" unless="version1.7" />
         <javac includeantruntime="false"
                fork="true"
+			   debug="on"
                srcdir="console/src"
                destdir="${build.dir}"
                classpath="${vendor.dir};"
@@ -98,6 +99,7 @@ NADEEF is released under the terms of the MIT License, (http://opensource.org/li
         <fail message="JDK 1.7 required" unless="version1.7" />
         <javac includeantruntime="false"
                fork="true"
+			   debug="on"
                srcdir="ruleext/src"
                destdir="${build.dir}"
                classpathref="vendors.jars"
@@ -115,6 +117,7 @@ NADEEF is released under the terms of the MIT License, (http://opensource.org/li
         <javac includeantruntime="false"
                fork="true"
                srcdir="tools/src"
+			   debug="on"
                destdir="${build.dir}"
                classpath="${vendor.dir}"
                classpathref="vendors.jars"
@@ -128,6 +131,7 @@ NADEEF is released under the terms of the MIT License, (http://opensource.org/li
         <fail message="JDK 1.7 required" unless="version1.7" />
         <javac includeantruntime="false"
                fork="true"
+			   debug="on"
                srcdir="service/src"
                destdir="${build.dir}"
                classpath="${vendor.dir}"

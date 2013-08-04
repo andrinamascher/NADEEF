@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -13,11 +13,11 @@
 
 package qa.qcri.nadeef.core.datamodel;
 
+import java.util.List;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-
-import java.util.List;
 
 /**
  * Schema class provides a mapping between column and value for a table.

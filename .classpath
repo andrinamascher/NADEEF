@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="core/src"/>
+	<classpathentry kind="src" path="tools/src"/>
+	<classpathentry kind="src" path="ruleext/src"/>
+	<classpathentry kind="src" path="console/src"/>
+	<classpathentry kind="src" path="test/src"/>
+	<classpathentry kind="lib" path="vendors/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="vendors/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="vendors/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="vendors/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="vendors/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="vendors/httpclient-4.1.2.jar"/>
+	<classpathentry kind="lib" path="vendors/httpcore-4.1.3.jar"/>
+	<classpathentry kind="lib" path="vendors/jline-2.11.jar"/>
+	<classpathentry kind="lib" path="vendors/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="vendors/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="vendors/libthrift-0.8.0.jar"/>
+	<classpathentry kind="lib" path="vendors/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="vendors/postgresql-9.1-901.jdbc4.jar"/>
+	<classpathentry kind="lib" path="vendors/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="vendors/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="lib" path="vendors/slf4j-log4j12-1.6.5.jar"/>
+	<classpathentry kind="lib" path="vendors/ST-4.0.7.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

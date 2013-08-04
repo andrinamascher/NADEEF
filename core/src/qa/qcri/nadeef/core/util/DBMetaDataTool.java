@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -13,14 +13,21 @@
 
 package qa.qcri.nadeef.core.util;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Map;
+
 import qa.qcri.nadeef.core.datamodel.Column;
-import qa.qcri.nadeef.core.datamodel.SQLTable;
+import qa.qcri.nadeef.core.datamodel.DataType;
 import qa.qcri.nadeef.core.datamodel.Schema;
 import qa.qcri.nadeef.tools.DBConfig;
 import qa.qcri.nadeef.tools.SqlQueryBuilder;
 import qa.qcri.nadeef.tools.Tracer;
-
-import java.sql.*;
 
 /**
  * An utility class for getting meta data from database.
@@ -110,7 +117,16 @@ public final class DBMetaDataTool {
             Column[] columns = new Column[count];
             for (int i = 1; i <= count; i ++) {
                 String attributeName = metaData.getColumnName(i);
-                columns[i - 1] = new Column(tableName, attributeName);
+                int type = metaData.getColumnType(i);
+                DataType dataType = DataType.STRING;
+                if (type == Types.INTEGER){
+                	dataType = DataType.INTEGER;
+                }else if (type == Types.FLOAT || type == Types.DOUBLE){
+                	dataType = DataType.DOUBLE;
+                }
+                Map<String,DataType> map = DataTypeRepository.getTypeMapping(tableName);
+                map.put(attributeName.toLowerCase(), dataType);
+                columns[i - 1] = new Column(tableName,attributeName);
             }
 
             result = new Schema(tableName, columns);

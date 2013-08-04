@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//console/src/qa/qcri/nadeef/console/Console.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/datamodel/CleanPlan.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/datamodel/Column.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/datamodel/Schema.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/pipeline/CleanExecutor.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/pipeline/ViolationDetector.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/util/DBMetaDataTool.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/util/RuleBuilder.java=UTF-8
+encoding//core/src/qa/qcri/nadeef/core/util/Violations.java=UTF-8
+encoding//ruleext/src/qa/qcri/nadeef/ruleext/template/FDRuleBuilder.stg=UTF-8
+encoding//ruleext/src/qa/qcri/nadeef/ruleext/template/PairDCRuleBuilder.stg=UTF-8
+encoding//ruleext/src/qa/qcri/nadeef/ruleext/template/SingleDCRuleBuilder.stg=UTF-8
+encoding//test/src/qa/qcri/nadeef/test/TestDataRepository.java=UTF-8
+encoding//test/src/qa/qcri/nadeef/test/core/DetectionTest.java=UTF-8
+encoding//test/src/qa/qcri/nadeef/test/rulebuilder/FDRuleBuilderTest.java=UTF-8
+encoding//test/src/qa/qcri/nadeef/test/service/NadeefJobSchedulerTest.java=UTF-8

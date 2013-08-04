@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -54,7 +54,7 @@ public class FDRuleBuilderTest {
             Schema schema =
                 schemaBuilder.table("table").column("A").column("B").column("C").build();
             output = fdRuleBuilder
-                .name("Test")
+                .name("Test123")
                 .table("table")
                 .schema(schema)
                 .out(workingDirectory)
@@ -93,10 +93,11 @@ public class FDRuleBuilderTest {
             Schema schema =
                 schemaBuilder.table("table").column("A").column("B").column("C").build();
             output = fdRuleBuilder
-                .name("Test")
+                .name("Test123")
                 .schema(schema)
                 .table("table")
                 .value("A|B, C")
+                
                 .build();
             Assert.assertTrue(output.size() == 1);
             Assert.assertTrue(output.iterator().next() != null);

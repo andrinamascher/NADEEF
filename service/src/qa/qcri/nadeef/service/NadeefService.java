@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means "Clean" in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -21,7 +21,7 @@ import org.apache.thrift.transport.TServerTransport;
 import qa.qcri.nadeef.core.util.Bootstrap;
 import qa.qcri.nadeef.service.thrift.TNadeefService;
 import qa.qcri.nadeef.tools.Tracer;
-
+ 
 /**
  * Service container which starts / stops the NADEEF thrift service.
  */

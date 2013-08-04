@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -19,11 +19,12 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import qa.qcri.nadeef.core.datamodel.NadeefConfiguration;
+import qa.qcri.nadeef.core.datamodel.PairTupleRule;
 import qa.qcri.nadeef.core.datamodel.Rule;
 import qa.qcri.nadeef.core.datamodel.Schema;
 import qa.qcri.nadeef.tools.CommonTools;
 import qa.qcri.nadeef.tools.Tracer;
-
+import qa.qcri.nadeef.core.datamodel.TuplePair;
 import java.io.File;
 import java.net.URL;
 import java.util.Collection;
@@ -168,13 +169,16 @@ public abstract class RuleBuilder {
                     "file://" + outputFile.getParent() + File.separator
                 );
             Class ruleClass = CommonTools.loadClass(className, url);
+            
             Rule rule = (Rule) ruleClass.getConstructor().newInstance();
 
-            rule.initialize(
+            Rule r = (Rule) rule;
+            
+            r.initialize(
                 Files.getNameWithoutExtension(outputFile.getName()),
                 tableNames
             );
-            result.add(rule);
+            result.add(r);
             tracer.verbose(
                 "Rule file : " + outputFile.getAbsolutePath() +
                 " is loaded in " +

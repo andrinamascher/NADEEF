@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -13,9 +13,18 @@
 
 package qa.qcri.nadeef.test.core;
 
-import org.junit.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
 import qa.qcri.nadeef.core.datamodel.CleanPlan;
 import qa.qcri.nadeef.core.datamodel.NadeefConfiguration;
 import qa.qcri.nadeef.core.pipeline.CleanExecutor;
@@ -25,10 +34,6 @@ import qa.qcri.nadeef.core.util.Violations;
 import qa.qcri.nadeef.test.TestDataRepository;
 import qa.qcri.nadeef.tools.CSVTools;
 import qa.qcri.nadeef.tools.Tracer;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Tests for CleanExecutor.
@@ -164,6 +169,68 @@ public class DetectionTest {
         }
     }
 
+    @Test
+    public void cleanExecutorConstantDCTest(){
+    	try{
+    		CleanPlan cleanPlan = TestDataRepository.getConstantDCTestPlan();
+    		CleanExecutor executor = new CleanExecutor(cleanPlan);
+            executor.detect();
+            verifyViolationResult(5);
+    	} catch (Exception e){
+    		e.printStackTrace();
+    		Assert.fail(e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void cleanExecutorDCTest(){
+    	try{
+    		CleanPlan cleanPlan = TestDataRepository.getDCTestPlan();
+    		CleanExecutor executor = new CleanExecutor(cleanPlan);
+            executor.detect();
+            verifyNumberOfViolationsByRule(12, cleanPlan.getRule().getRuleName());
+    	} catch (Exception e){
+    		e.printStackTrace();
+    		Assert.fail(e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void cleanExecutorSingleDCTest(){
+    	try{
+    		CleanPlan cleanPlan = TestDataRepository.getSingleTupleDCTestPlan();
+    		CleanExecutor executor = new CleanExecutor(cleanPlan);
+            executor.detect();
+            verifyNumberOfViolationsByRule(6, cleanPlan.getRule().getRuleName());
+    	} catch (Exception e){
+    		e.printStackTrace();
+    		Assert.fail(e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void cleanExecutorFloatDCTest(){
+    	try{
+    		CleanPlan cleanPlan = TestDataRepository.getFloatDCTestPlan();
+    		CleanExecutor executor = new CleanExecutor(cleanPlan);
+    		executor.detect();
+    		verifyNumberOfViolationsByRule(12, cleanPlan.getRule().getRuleName());
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		Assert.fail(e.getMessage());
+    	}
+    }
+    
+    private void verifyNumberOfViolationsByRule(int expectNum, String ruleId) 
+    	throws 
+    		ClassNotFoundException, 
+    		InstantiationException, 
+    		IllegalAccessException, 
+    		SQLException{
+    	int violationCount = Violations.getNumberOfViolationsByRule(ruleId);
+    	Assert.assertEquals(expectNum, violationCount);
+    }
+    
     private void verifyViolationResult(int expectRow)
         throws
         ClassNotFoundException,

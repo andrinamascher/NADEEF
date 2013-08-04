@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -13,15 +13,28 @@
 
 package qa.qcri.nadeef.core.pipeline;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.*;
-import qa.qcri.nadeef.core.datamodel.*;
-import qa.qcri.nadeef.tools.Tracer;
-
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
+import qa.qcri.nadeef.core.datamodel.IteratorStream;
+import qa.qcri.nadeef.core.datamodel.Rule;
+import qa.qcri.nadeef.core.datamodel.Table;
+import qa.qcri.nadeef.core.datamodel.Tuple;
+import qa.qcri.nadeef.core.datamodel.TuplePair;
+import qa.qcri.nadeef.core.datamodel.Violation;
+import qa.qcri.nadeef.tools.Tracer;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * Wrapper class for executing the violation detection.
@@ -34,6 +47,8 @@ public class ViolationDetector<T>
     private Collection<Violation> resultCollection;
     private ListeningExecutorService service;
 
+    private Object lock = new Object();
+    
     private int totalThreadCount;
     private int finishedThreadCount;
     private int detectCount;
@@ -72,9 +87,11 @@ public class ViolationDetector<T>
      */
     class Detector implements Callable<Integer> {
         private List<Object> tupleList;
-
+        private Object lock;
+        
         public Detector(List<Object> tupleList) {
             this.tupleList = tupleList;
+            this.lock = lock;
         }
 
         /**
@@ -113,11 +130,11 @@ public class ViolationDetector<T>
                     result.addAll(violations);
                 }
             }
-
+            
+            // TODO comment by Ian, this is potential bottleneck...
             synchronized (ViolationDetector.class) {
                 resultCollection.addAll(result);
             }
-
             // This is to reclaim the memory back.
             tupleList = null;
             return count;
@@ -139,6 +156,7 @@ public class ViolationDetector<T>
         List<Object> tupleList;
         long elapsedTime = 0l;
         detectCount = 0;
+        
         while (true) {
             tupleList = iteratorStream.poll();
             if (tupleList.size() == 0) {
@@ -148,6 +166,11 @@ public class ViolationDetector<T>
             totalThreadCount ++;
             ListenableFuture<Integer> future = service.submit(new Detector(tupleList));
             Futures.addCallback(future, new DetectorCallback());
+
+            // comment by Ian: here we need a synchronized action to make sure data filled into resultCollection, otherwise there will be racing problem!
+            while (!future.isDone() && !future.isCancelled()){
+            	Thread.sleep(1000);
+            }
         }
 
         Tracer.putStatsEntry(Tracer.StatType.DetectCallTime, elapsedTime);

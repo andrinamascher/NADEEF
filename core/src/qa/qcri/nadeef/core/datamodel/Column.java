@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -13,6 +13,9 @@
 
 package qa.qcri.nadeef.core.datamodel;
 
+import java.util.Map;
+
+import qa.qcri.nadeef.core.util.DataTypeRepository;
 import qa.qcri.nadeef.tools.CommonTools;
 
 /**
@@ -22,8 +25,14 @@ public class Column {
     private String tableName;
     private String attributeName;
     private String schemaName;
+    private DataType type;
 
-    //<editor-fold desc="Constructors">
+    public DataType getType() {
+		return type;
+	}
+
+
+	//<editor-fold desc="Constructors">
     /**
      * Constructor.
      */
@@ -44,8 +53,19 @@ public class Column {
         schemaName = "public";
         tableName = splits[0];
         attributeName = splits[1];
+        initDataType();
     }
 
+    private void initDataType(){
+    	 Map<String, DataType> map = DataTypeRepository.getTypeMapping(schemaName, tableName);   	 
+    	 type = map.get(attributeName.toLowerCase()); 
+    	 // by default
+    	if (type == null){
+    		// should throw exception here
+    		type = DataType.STRING;
+    	}
+    }
+    
     /**
      * Constructor.
      * @param schemaName schema.
@@ -59,6 +79,7 @@ public class Column {
         this.schemaName = schemaName;
         this.tableName = tableName;
         this.attributeName = attributeName;
+        initDataType();
     }
     //</editor-fold>
 
@@ -78,6 +99,16 @@ public class Column {
         return tableName;
     }
 
+    /**
+     * Gets the attribute name.
+     * @return attribute name.
+     */    
+    public String getAttributeName() {
+		return attributeName;
+	}
+
+
+    
     /**
      * Returns <code>True</code> when the tuple is from the given table name.
      * @param tableName table name.

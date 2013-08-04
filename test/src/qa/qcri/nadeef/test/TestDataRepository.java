@@ -1,7 +1,7 @@
 /*
  * QCRI, NADEEF LICENSE
  * NADEEF is an extensible, generalized and easy-to-deploy data cleaning platform built at QCRI.
- * NADEEF means “Clean” in Arabic
+ * NADEEF means â€œCleanâ€� in Arabic
  *
  * Copyright (c) 2011-2013, Qatar Foundation for Education, Science and Community Development (on
  * behalf of Qatar Computing Research Institute) having its principle place of business in Doha,
@@ -127,6 +127,26 @@ public class TestDataRepository {
         return new File(filePath.replace('*', File.separatorChar));
     }
 
+    public static File getDCTestFile(){
+    	final String filePath = "test*src*qa*qcri*nadeef*test*input*DCTest.json";
+    	return new File(filePath.replace('*', File.separatorChar));
+    }
+    
+    public static File getConstantDCTestFile(){
+    	final String filePath = "test*src*qa*qcri*nadeef*test*input*ConstantDCTest.json";
+    	return new File(filePath.replace('*', File.separatorChar));
+    }
+    
+    public static File getSingleTupleDCTestFile(){
+    	final String filePath = "test*src*qa*qcri*nadeef*test*input*CleanPlanSingle.json";
+    	return new File(filePath.replace('*', File.separatorChar));
+    }
+    
+    public static File getFloatDCTestFile(){
+    	final String filePath = "test*src*qa*qcri*nadeef*test*input*FloatDCTest.json";
+    	return new File(filePath.replace('*', File.separatorChar));
+    }
+    
     public static CleanPlan getCleanPlan()
         throws
             InvalidRuleException,
@@ -229,5 +249,37 @@ public class TestDataRepository {
             FileNotFoundException,
             InvalidCleanPlanException {
         return CleanPlan.createCleanPlanFromJSON(new FileReader(getPairCleanPlanFile1())).get(0);
+    }
+    
+    public static CleanPlan getDCTestPlan()
+    	throws
+            InvalidRuleException,
+            FileNotFoundException,
+            InvalidCleanPlanException {
+    	return CleanPlan.createCleanPlanFromJSON(new FileReader(getDCTestFile())).get(0);
+    }
+    
+    public static CleanPlan getConstantDCTestPlan()
+    	throws
+    		InvalidRuleException,
+    		FileNotFoundException,
+    		InvalidCleanPlanException{
+    	return CleanPlan.createCleanPlanFromJSON(new FileReader(getConstantDCTestFile())).get(0);
+    }
+    
+    public static CleanPlan getSingleTupleDCTestPlan()
+    	throws
+    		InvalidRuleException,
+    		FileNotFoundException,
+    		InvalidCleanPlanException{
+    	return CleanPlan.createCleanPlanFromJSON(new FileReader(getSingleTupleDCTestFile())).get(0);
+    }
+    
+    public static CleanPlan getFloatDCTestPlan()
+    	throws
+    		InvalidRuleException,
+    		FileNotFoundException,
+    		InvalidCleanPlanException{
+    	return CleanPlan.createCleanPlanFromJSON(new FileReader(getFloatDCTestFile())).get(0);
     }
 }
