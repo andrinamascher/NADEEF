@@ -1,0 +1,7 @@
+/bin
+out
+/*.classpath
+/*.project
+/examples/*.xlsx
+/examples/*.xlsx
+/examples/*.xlsx
